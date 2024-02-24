@@ -69,11 +69,46 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.edit_btn.clicked.connect(self.edit)
         self.actionOpen.triggered.connect(self.open_image)
+        self.logo_label.setPixmap(QPixmap('logo.png'))
+
         self.contrast_slider.valueChanged['int'].connect(self.contrast_update)
         self.brightness_slider.valueChanged['int'].connect(self.brightness_update)
+        self.sharpness_slider.valueChanged['int'].connect(self.sharpness_update)
+
+        self.contrast_reset.clicked.connect(self.reset_contrast)
+        self.brightness_reset.clicked.connect(self.reset_brightness)
+        self.sharpness_reset.clicked.connect(self.reset_sharpness)
+
         self.image = None
+        self.pore_density = 0
+        self.pore_anomaly = 0
         self.contrast_value = 1
         self.brightness_value = 0
+        self.sharpness_value = 0
+
+    def reset_contrast(self) -> None:
+        """
+        Обработчик нажатия кнопки Reset
+        :return:
+        """
+        self.contrast_value = 1
+        self.contrast_slider.setValue(0)
+
+    def reset_brightness(self) -> None:
+        """
+        Обработчик нажатия кнопки Reset
+        :return:
+        """
+        self.brightness_value = 0
+        self.brightness_slider.setValue(0)
+
+    def reset_sharpness(self) -> None:
+        """
+        Обработчик нажатия кнопки Reset
+        :return:
+        """
+        self.sharpness_value = 0
+        self.sharpness_slider.setValue(0)
 
     def open_image(self) -> None:
         """
@@ -87,6 +122,7 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
         self.image = cv.imread(file_path)
         self.set_image(self.image, 'main')
         self.set_image(self.image, 'final')
+        self.area_update(self.image)
 
     def contrast_update(self, value) -> None:
         """
@@ -106,12 +142,29 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
         self.brightness_value = value
         self.update_image()
 
+    def sharpness_update(self, value) -> None:
+        """
+        Метод для преобразования значений резкости и обновления изображения
+        :param value:
+        :return:
+        """
+        self.sharpness_value = value / 10
+        self.update_image()
+
+    def area_update(self, image):
+        img, self.pore_density, self.pore_anomaly = preprocessing.explore(image, 0, 100)
+        self.density_label.setText(f'Пористость = {round(self.pore_density, 2)}')
+        self.anomaly_label.setText(f'Количество пор, \nпревышающих норму: {self.pore_anomaly}')
+        self.set_image(img, 'close')
+
     def update_image(self):
         '''
         Метод обновляет все значения изображения
         :return:
         '''
         img = preprocessing.linear_change(self.image, self.contrast_value, self.brightness_value)
+        img = preprocessing.change_sharpness(img, self.sharpness_value)
+        self.area_update(img)
         self.set_image(img, 'final')
 
     def set_image(self, image, view='main') -> None:
@@ -134,7 +187,7 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def edit(self) -> None:
         """
-        Функция-обработчик закрытия диалогового окна
+        Функция-обработчик диалогового окна
         :return:
         """
         dial = Dialog()
