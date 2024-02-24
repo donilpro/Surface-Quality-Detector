@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1390, 933)
+        MainWindow.resize(1390, 939)
         MainWindow.setBaseSize(QtCore.QSize(1366, 768))
         MainWindow.setStyleSheet("QMainWindow{background-color: #F2EFE5}\n"
 "\n"
@@ -56,7 +56,11 @@ class Ui_MainWindow(object):
         self.frame_2.setMinimumSize(QtCore.QSize(360, 360))
         self.frame_2.setMaximumSize(QtCore.QSize(360, 360))
         self.frame_2.setBaseSize(QtCore.QSize(360, 360))
-        self.frame_2.setStyleSheet("QFrame{background-color: #C7C8CC}")
+        self.frame_2.setStyleSheet("QFrame{background-color: #C7C8CC}\n"
+"QFrame#frame_2{\n"
+"   border: 1px solid black;\n"
+"    border-style: inset;\n"
+"}")
         self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_2.setObjectName("frame_2")
@@ -72,25 +76,112 @@ class Ui_MainWindow(object):
         self.frame_6 = QtWidgets.QFrame(self.centralwidget)
         self.frame_6.setMinimumSize(QtCore.QSize(360, 360))
         self.frame_6.setBaseSize(QtCore.QSize(360, 360))
-        self.frame_6.setStyleSheet("QFrame{background-color: #C7C8CC}")
+        self.frame_6.setStyleSheet("QFrame{background-color: #C7C8CC}\n"
+"QFrame#frame_6{\n"
+"   border: 1px solid black;\n"
+"    border-style: inset;\n"
+"}")
         self.frame_6.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_6.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_6.setObjectName("frame_6")
         self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.frame_6)
-        self.verticalLayout_7.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_7.setContentsMargins(10, 0, 10, 10)
         self.verticalLayout_7.setSpacing(6)
         self.verticalLayout_7.setObjectName("verticalLayout_7")
         self.frame_8 = QtWidgets.QFrame(self.frame_6)
+        self.frame_8.setEnabled(True)
         self.frame_8.setMinimumSize(QtCore.QSize(256, 256))
         self.frame_8.setBaseSize(QtCore.QSize(0, 0))
         self.frame_8.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_8.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_8.setObjectName("frame_8")
+        self.gridLayout_6 = QtWidgets.QGridLayout(self.frame_8)
+        self.gridLayout_6.setContentsMargins(20, 20, 20, 20)
+        self.gridLayout_6.setObjectName("gridLayout_6")
+        self.frame_14 = QtWidgets.QFrame(self.frame_8)
+        self.frame_14.setStyleSheet("QFrame#frame_14{\n"
+"   border-left: 1px solid black;\n"
+"   border-right: 1px solid black;\n"
+"}")
+        self.frame_14.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_14.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_14.setObjectName("frame_14")
+        self.verticalLayout_10 = QtWidgets.QVBoxLayout(self.frame_14)
+        self.verticalLayout_10.setObjectName("verticalLayout_10")
+        self.label_8 = QtWidgets.QLabel(self.frame_14)
+        self.label_8.setObjectName("label_8")
+        self.verticalLayout_10.addWidget(self.label_8)
+        self.density_std_label = QtWidgets.QLabel(self.frame_14)
+        self.density_std_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.density_std_label.setObjectName("density_std_label")
+        self.verticalLayout_10.addWidget(self.density_std_label)
+        self.gridLayout_6.addWidget(self.frame_14, 2, 1, 1, 1)
+        self.frame_13 = QtWidgets.QFrame(self.frame_8)
+        self.frame_13.setStyleSheet("QFrame#frame_13{\n"
+"   border-left: 1px solid black;\n"
+"   border-right: 1px solid black;\n"
+"}")
+        self.frame_13.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_13.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_13.setObjectName("frame_13")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.frame_13)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.label_6 = QtWidgets.QLabel(self.frame_13)
+        self.label_6.setObjectName("label_6")
+        self.verticalLayout_3.addWidget(self.label_6)
+        self.square_std_label = QtWidgets.QLabel(self.frame_13)
+        self.square_std_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.square_std_label.setObjectName("square_std_label")
+        self.verticalLayout_3.addWidget(self.square_std_label)
+        self.gridLayout_6.addWidget(self.frame_13, 0, 1, 1, 1)
+        self.frame_12 = QtWidgets.QFrame(self.frame_8)
+        self.frame_12.setStyleSheet("QFrame#frame_12{\n"
+"   border-right: 1px solid black;\n"
+"   border-left: 1px solid black;\n"
+"}")
+        self.frame_12.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_12.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_12.setObjectName("frame_12")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.frame_12)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.label_4 = QtWidgets.QLabel(self.frame_12)
+        self.label_4.setObjectName("label_4")
+        self.verticalLayout_2.addWidget(self.label_4)
+        self.square_label = QtWidgets.QLabel(self.frame_12)
+        self.square_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.square_label.setObjectName("square_label")
+        self.verticalLayout_2.addWidget(self.square_label)
+        self.gridLayout_6.addWidget(self.frame_12, 0, 0, 1, 1)
+        self.frame_15 = QtWidgets.QFrame(self.frame_8)
+        self.frame_15.setStyleSheet("QFrame#frame_15{\n"
+"   border-right: 1px solid black;\n"
+"   border-left: 1px solid black;\n"
+"}")
+        self.frame_15.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_15.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_15.setObjectName("frame_15")
+        self.verticalLayout_9 = QtWidgets.QVBoxLayout(self.frame_15)
+        self.verticalLayout_9.setObjectName("verticalLayout_9")
+        self.label_12 = QtWidgets.QLabel(self.frame_15)
+        self.label_12.setObjectName("label_12")
+        self.verticalLayout_9.addWidget(self.label_12)
+        self.density_label = QtWidgets.QLabel(self.frame_15)
+        self.density_label.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.density_label.setObjectName("density_label")
+        self.verticalLayout_9.addWidget(self.density_label)
+        self.gridLayout_6.addWidget(self.frame_15, 2, 0, 1, 1)
+        self.line_4 = QtWidgets.QFrame(self.frame_8)
+        self.line_4.setFrameShadow(QtWidgets.QFrame.Plain)
+        self.line_4.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line_4.setObjectName("line_4")
+        self.gridLayout_6.addWidget(self.line_4, 1, 0, 1, 2)
         self.verticalLayout_7.addWidget(self.frame_8)
         self.comboBox = QtWidgets.QComboBox(self.frame_6)
+        self.comboBox.setMinimumSize(QtCore.QSize(0, 27))
         self.comboBox.setAcceptDrops(False)
         self.comboBox.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.comboBox.setAutoFillBackground(False)
+        self.comboBox.setIconSize(QtCore.QSize(2, 2))
         self.comboBox.setDuplicatesEnabled(False)
         self.comboBox.setFrame(True)
         self.comboBox.setObjectName("comboBox")
@@ -119,12 +210,16 @@ class Ui_MainWindow(object):
         self.frame_5 = QtWidgets.QFrame(self.centralwidget)
         self.frame_5.setMinimumSize(QtCore.QSize(360, 360))
         self.frame_5.setBaseSize(QtCore.QSize(360, 360))
-        self.frame_5.setStyleSheet("QFrame{background-color: #C7C8CC}")
+        self.frame_5.setStyleSheet("QFrame{background-color: #C7C8CC}\n"
+"QFrame#frame_5{\n"
+"   border: 1px solid black;\n"
+"    border-style: inset;\n"
+"}")
         self.frame_5.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_5.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_5.setObjectName("frame_5")
         self.verticalLayout_8 = QtWidgets.QVBoxLayout(self.frame_5)
-        self.verticalLayout_8.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_8.setContentsMargins(10, 10, 10, 10)
         self.verticalLayout_8.setObjectName("verticalLayout_8")
         self.frame_7 = QtWidgets.QFrame(self.frame_5)
         self.frame_7.setMinimumSize(QtCore.QSize(256, 256))
@@ -132,7 +227,7 @@ class Ui_MainWindow(object):
         self.frame_7.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_7.setObjectName("frame_7")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.frame_7)
-        self.gridLayout_2.setContentsMargins(30, -1, 30, -1)
+        self.gridLayout_2.setContentsMargins(20, -1, 20, -1)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.line_2 = QtWidgets.QFrame(self.frame_7)
         self.line_2.setFrameShadow(QtWidgets.QFrame.Plain)
@@ -156,28 +251,28 @@ class Ui_MainWindow(object):
         self.line.setFrameShape(QtWidgets.QFrame.HLine)
         self.line.setObjectName("line")
         self.gridLayout_2.addWidget(self.line, 1, 0, 1, 1)
-        self.label_9 = QtWidgets.QLabel(self.frame_7)
+        self.is_normal_label = QtWidgets.QLabel(self.frame_7)
         font = QtGui.QFont()
         font.setFamily("Jura")
         font.setPointSize(12)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
-        self.label_9.setFont(font)
-        self.label_9.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_9.setObjectName("label_9")
-        self.gridLayout_2.addWidget(self.label_9, 2, 0, 1, 1)
-        self.density_label = QtWidgets.QLabel(self.frame_7)
+        self.is_normal_label.setFont(font)
+        self.is_normal_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.is_normal_label.setObjectName("is_normal_label")
+        self.gridLayout_2.addWidget(self.is_normal_label, 2, 0, 1, 1)
+        self.density_info = QtWidgets.QLabel(self.frame_7)
         font = QtGui.QFont()
         font.setFamily("Jura")
         font.setPointSize(12)
         font.setBold(False)
         font.setItalic(False)
         font.setWeight(50)
-        self.density_label.setFont(font)
-        self.density_label.setAlignment(QtCore.Qt.AlignCenter)
-        self.density_label.setObjectName("density_label")
-        self.gridLayout_2.addWidget(self.density_label, 0, 0, 1, 1)
+        self.density_info.setFont(font)
+        self.density_info.setAlignment(QtCore.Qt.AlignCenter)
+        self.density_info.setObjectName("density_info")
+        self.gridLayout_2.addWidget(self.density_info, 0, 0, 1, 1)
         self.verticalLayout_8.addWidget(self.frame_7)
         self.save_btn = QtWidgets.QPushButton(self.frame_5)
         self.save_btn.setMinimumSize(QtCore.QSize(0, 60))
@@ -189,7 +284,11 @@ class Ui_MainWindow(object):
         self.frame_3.setMinimumSize(QtCore.QSize(360, 360))
         self.frame_3.setMaximumSize(QtCore.QSize(360, 360))
         self.frame_3.setBaseSize(QtCore.QSize(360, 360))
-        self.frame_3.setStyleSheet("QFrame{background-color: #C7C8CC}")
+        self.frame_3.setStyleSheet("QFrame{background-color: #C7C8CC}\n"
+"QFrame#frame_3{\n"
+"   border: 1px solid black;\n"
+"    border-style: inset;\n"
+"}")
         self.frame_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_3.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_3.setObjectName("frame_3")
@@ -235,7 +334,11 @@ class Ui_MainWindow(object):
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
         self.frame.setPalette(palette)
         self.frame.setAutoFillBackground(False)
-        self.frame.setStyleSheet("QFrame{background-color: #C7C8CC}")
+        self.frame.setStyleSheet("QFrame{background-color: #C7C8CC}\n"
+"QFrame#frame{\n"
+"   border: 1px solid black;\n"
+"    border-style: inset;\n"
+"}")
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
@@ -324,7 +427,11 @@ class Ui_MainWindow(object):
         self.frame_4.setMinimumSize(QtCore.QSize(360, 360))
         self.frame_4.setMaximumSize(QtCore.QSize(360, 360))
         self.frame_4.setBaseSize(QtCore.QSize(360, 360))
-        self.frame_4.setStyleSheet("QFrame{background-color: #C7C8CC}")
+        self.frame_4.setStyleSheet("QFrame{background-color: #C7C8CC}\n"
+"QFrame#frame_4{\n"
+"   border: 1px solid black;\n"
+"    border-style: inset;\n"
+"}")
         self.frame_4.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_4.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_4.setObjectName("frame_4")
@@ -375,6 +482,14 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.label_8.setText(_translate("MainWindow", "Отклонение"))
+        self.density_std_label.setText(_translate("MainWindow", "TextLabel"))
+        self.label_6.setText(_translate("MainWindow", "Отклонение"))
+        self.square_std_label.setText(_translate("MainWindow", "TextLabel"))
+        self.label_4.setText(_translate("MainWindow", "Площадь поры"))
+        self.square_label.setText(_translate("MainWindow", "TextLabel"))
+        self.label_12.setText(_translate("MainWindow", "Пористость"))
+        self.density_label.setText(_translate("MainWindow", "TextLabel"))
         self.comboBox.setCurrentText(_translate("MainWindow", "111"))
         self.comboBox.setItemText(0, _translate("MainWindow", "111"))
         self.comboBox.setItemText(1, _translate("MainWindow", "222"))
@@ -382,8 +497,8 @@ class Ui_MainWindow(object):
         self.snapshot_btn.setText(_translate("MainWindow", "Снимок"))
         self.anomaly_label.setText(_translate("MainWindow", "Количество пор, \n"
 " превышающих норму: 0"))
-        self.label_9.setText(_translate("MainWindow", "Пористость в норме"))
-        self.density_label.setText(_translate("MainWindow", "Пористость: 0"))
+        self.is_normal_label.setText(_translate("MainWindow", "Пористость в норме"))
+        self.density_info.setText(_translate("MainWindow", "Пористость: 0"))
         self.save_btn.setText(_translate("MainWindow", "Сохранить в отчёт"))
         self.contrast_reset.setText(_translate("MainWindow", "Reset"))
         self.label.setText(_translate("MainWindow", "Контрастность"))

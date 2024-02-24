@@ -1,35 +1,19 @@
 import sys
 import logging
-import time
+from datetime import datetime
 
 from PyQt5 import QtWidgets
-from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtCore import QThread
-from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QFileDialog
+from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtGui import QPixmap, QImage
-
-from PIL.ImageQt import ImageQt
-from PIL import Image, ImageEnhance
 
 import cv2 as cv
 
 from design import Ui_MainWindow
 from database.dialog import Ui_Dialog
-from database.select import select_all
+from database.select import select_all, delete, add, select_name
 from algorithms import preprocessing
 
-
-class ImageProcessing(QThread):
-    finish_signal = pyqtSignal(object)
-
-    def __init__(self):
-        super().__init__()
-
-    def run(self) -> None:
-        QtImage1 = ImageQt(preprocessing.change_contrast(PilImage, 1.5))
-        QtImage2 = QImage(QtImage1)
-        pxmap = QPixmap.fromImage(QtImage2)
-        self.finish_signal.emit(pxmap)
+from reports import create_report
 
 
 class Dialog(QtWidgets.QDialog, Ui_Dialog):
@@ -40,6 +24,32 @@ class Dialog(QtWidgets.QDialog, Ui_Dialog):
         self.tableWidget.setColumnCount(6)
         self.tableWidget.setHorizontalHeaderLabels(['id', 'Наименование', 'Площадь поры', 'Откл. от площади',
                                                     'Пористость', 'Откл. от пористости'])
+
+        self.del_btn.clicked.connect(self.click_delete)
+        self.add_btn.clicked.connect(self.click_add)
+
+        self.table_update()
+
+    def click_add(self) -> None:
+        """
+        Обработчик нажатия кнопки добавления записи
+        :return:
+        """
+        name = self.name_line.text()
+        square = self.square_line.text()
+        square_std = self.square_std_line.text()
+        density = self.density_line.text()
+        density_std = self.density_std_line.text()
+        add(name, square, square_std, density, density_std)
+        self.table_update()
+
+    def click_delete(self) -> None:
+        """
+        Обработчик нажатия кнопки удаления записи
+        :return:
+        """
+        identity = self.delete_line.text()
+        delete(identity)
         self.table_update()
 
     def click_ok(self) -> None:
@@ -66,6 +76,8 @@ class Dialog(QtWidgets.QDialog, Ui_Dialog):
 class Window(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
+        self.dial = Dialog()
+
         self.setupUi(self)
         self.edit_btn.clicked.connect(self.edit)
         self.actionOpen.triggered.connect(self.open_image)
@@ -81,10 +93,64 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.image = None
         self.pore_density = 0
+        self.pore_is_correct = False
         self.pore_anomaly = 0
         self.contrast_value = 1
         self.brightness_value = 0
         self.sharpness_value = 0
+        self.material_id = None
+
+        self.combobox_update()
+        self.material_info_update()
+
+        self.comboBox.currentTextChanged.connect(self.material_info_update)
+
+        self.report_name = datetime.now().strftime('reports/report_%d-%m-%Y_%H-%M-%S.csv')
+        self.report_created = False
+        self.save_btn.clicked.connect(self.save_report)
+
+    def save_report(self) -> None:
+        """
+        Сохранение информацию в табличном виде
+        :return:
+        """
+        print('Saving report ...')
+        if self.report_created:
+            create_report.add(self.report_name, (self.comboBox.currentText(), self.contrast_value,
+                                                 self.brightness_value, self.sharpness_value, self.square_label.text(),
+                                                 self.square_label.text(), self.density_label.text(),
+                                                 self.density_std_label.text(), self.pore_density, self.pore_is_correct,
+                                                 self.pore_anomaly))
+        else:
+            create_report.write_header(self.report_name)
+            self.report_created = True
+            self.save_report()
+
+    def material_info_update(self) -> None:
+        """
+        Обновление информирующих лейблов на основе данных о материале
+        :return:
+        """
+        info = select_all()[self.comboBox.currentIndex()]
+        self.material_id = int(info[0])
+        print(self.material_id)
+        self.square_label.setText(str(info[-4]))
+        self.square_std_label.setText(str(info[-3]))
+        self.density_label.setText(str(info[-2]))
+        self.density_std_label.setText(str(info[-1]))
+        if self.image is not None:
+            self.update_image()
+
+    def combobox_update(self) -> None:
+        """
+        Обновление комбо-бокса
+        :return:
+        """
+        req = select_name()
+        self.comboBox.clear()
+        for r in req:
+            print(r[0])
+            self.comboBox.addItem(r[0])
 
     def reset_contrast(self) -> None:
         """
@@ -151,17 +217,33 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
         self.sharpness_value = value / 10
         self.update_image()
 
-    def area_update(self, image):
-        img, self.pore_density, self.pore_anomaly = preprocessing.explore(image, 0, 100)
-        self.density_label.setText(f'Пористость = {round(self.pore_density, 2)}')
+    def area_update(self, image) -> None:
+        """
+        Главный алгоритм определения пористости
+        :param image:
+        :return:
+        """
+        img, self.pore_density, self.pore_anomaly = preprocessing.explore(image,
+                                                                          float(self.square_label.text()) -
+                                                                          float(self.square_std_label.text()),
+                                                                          float(self.square_label.text()) +
+                                                                          float(self.square_std_label.text()))
+        self.pore_density = round(self.pore_density, 2)
+        self.density_info.setText(f'Пористость: {self.pore_density}')
         self.anomaly_label.setText(f'Количество пор, \nпревышающих норму: {self.pore_anomaly}')
         self.set_image(img, 'close')
+        print(float(self.density_label.text()) - float(self.density_std_label.text()))
+        if (float(self.density_label.text()) - float(self.density_std_label.text()) <= self.pore_density
+                <= float(self.density_label.text()) + float(self.density_std_label.text())):
+            self.is_normal_label.setText('Пористость в норме')
+        else:
+            self.is_normal_label.setText('Пористость не в норме')
 
     def update_image(self):
-        '''
+        """
         Метод обновляет все значения изображения
         :return:
-        '''
+        """
         img = preprocessing.linear_change(self.image, self.contrast_value, self.brightness_value)
         img = preprocessing.change_sharpness(img, self.sharpness_value)
         self.area_update(img)
@@ -190,23 +272,20 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
         Функция-обработчик диалогового окна
         :return:
         """
-        dial = Dialog()
-        dial.show()
-        result = dial.exec()
+        self.setEnabled(False)
+        self.dial.show()
+        result = self.dial.exec()
         if result == 1:
             print("Нажата кнопка ОК")
         else:
             print("Нажата кнопка Cancel")
+        self.setEnabled(True)
+        self.combobox_update()
 
 
 if __name__ == '__main__':
     logging.basicConfig(level='INFO')
     app = QtWidgets.QApplication(sys.argv)
-
-    # PilImage = Image.open('images/photo_2024-02-19_21-45-26.jpg')
-    # QtImage1 = ImageQt(PilImage)
-    # QtImage2 = QImage(QtImage1)
-    # pixmap = QPixmap.fromImage(QtImage2)
 
     win = Window()
     win.show()

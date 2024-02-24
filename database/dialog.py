@@ -14,14 +14,61 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(953, 615)
+        Dialog.resize(920, 501)
+        Dialog.setMinimumSize(QtCore.QSize(920, 0))
+        Dialog.setMaximumSize(QtCore.QSize(920, 16777215))
+        Dialog.setStyleSheet("QDialog{background-color: #E3E1D9}\n"
+"\n"
+"QTableWidget {\n"
+"    background: white;\n"
+"    background-color: white;\n"
+"    color: black;\n"
+"    font: 8pt \"Jura\";\n"
+"    border: 1px solid black\n"
+"}\n"
+"\n"
+"QLineEdit {\n"
+"    background: white;\n"
+"    background-color: white;\n"
+"    color: black;\n"
+"    font: 8pt \"Jura\";\n"
+"    border: 1px solid black\n"
+"}\n"
+"\n"
+"\n"
+"QPushButton {\n"
+"    background-color: white;\n"
+"    color: black;\n"
+"    font: 12pt \"Jura\";\n"
+"    border: 1px solid black\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #B4B4B8;\n"
+"    color: black\n"
+"}\n"
+"\n"
+"Line{\n"
+"    color: black\n"
+"}\n"
+"\n"
+"QLabel{\n"
+"font: 12pt \"Jura\"}\n"
+"\n"
+"\n"
+"")
         self.verticalLayout = QtWidgets.QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName("verticalLayout")
         self.tableWidget = QtWidgets.QTableWidget(Dialog)
+        self.tableWidget.setMinimumSize(QtCore.QSize(902, 0))
+        self.tableWidget.setMaximumSize(QtCore.QSize(902, 16777215))
+        self.tableWidget.setBaseSize(QtCore.QSize(180, 0))
         self.tableWidget.setObjectName("tableWidget")
         self.tableWidget.setColumnCount(0)
         self.tableWidget.setRowCount(0)
+        self.tableWidget.horizontalHeader().setCascadingSectionResizes(True)
         self.tableWidget.horizontalHeader().setDefaultSectionSize(150)
+        self.tableWidget.verticalHeader().setVisible(False)
         self.tableWidget.verticalHeader().setDefaultSectionSize(30)
         self.tableWidget.verticalHeader().setMinimumSectionSize(30)
         self.verticalLayout.addWidget(self.tableWidget)
@@ -30,23 +77,31 @@ class Ui_Dialog(object):
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.frame)
+        self.horizontalLayout_2.setContentsMargins(0, -1, 0, -1)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.lineEdit_2 = QtWidgets.QLineEdit(self.frame)
-        self.lineEdit_2.setObjectName("lineEdit_2")
-        self.horizontalLayout_2.addWidget(self.lineEdit_2)
-        self.lineEdit_3 = QtWidgets.QLineEdit(self.frame)
-        self.lineEdit_3.setObjectName("lineEdit_3")
-        self.horizontalLayout_2.addWidget(self.lineEdit_3)
-        self.lineEdit_4 = QtWidgets.QLineEdit(self.frame)
-        self.lineEdit_4.setObjectName("lineEdit_4")
-        self.horizontalLayout_2.addWidget(self.lineEdit_4)
-        self.lineEdit_5 = QtWidgets.QLineEdit(self.frame)
-        self.lineEdit_5.setObjectName("lineEdit_5")
-        self.horizontalLayout_2.addWidget(self.lineEdit_5)
-        self.lineEdit_6 = QtWidgets.QLineEdit(self.frame)
-        self.lineEdit_6.setObjectName("lineEdit_6")
-        self.horizontalLayout_2.addWidget(self.lineEdit_6)
+        self.name_line = QtWidgets.QLineEdit(self.frame)
+        self.name_line.setMinimumSize(QtCore.QSize(0, 24))
+        self.name_line.setObjectName("name_line")
+        self.horizontalLayout_2.addWidget(self.name_line)
+        self.square_line = QtWidgets.QLineEdit(self.frame)
+        self.square_line.setMinimumSize(QtCore.QSize(0, 24))
+        self.square_line.setObjectName("square_line")
+        self.horizontalLayout_2.addWidget(self.square_line)
+        self.square_std_line = QtWidgets.QLineEdit(self.frame)
+        self.square_std_line.setMinimumSize(QtCore.QSize(0, 24))
+        self.square_std_line.setObjectName("square_std_line")
+        self.horizontalLayout_2.addWidget(self.square_std_line)
+        self.density_line = QtWidgets.QLineEdit(self.frame)
+        self.density_line.setMinimumSize(QtCore.QSize(0, 24))
+        self.density_line.setObjectName("density_line")
+        self.horizontalLayout_2.addWidget(self.density_line)
+        self.density_std_line = QtWidgets.QLineEdit(self.frame)
+        self.density_std_line.setMinimumSize(QtCore.QSize(0, 24))
+        self.density_std_line.setObjectName("density_std_line")
+        self.horizontalLayout_2.addWidget(self.density_std_line)
         self.add_btn = QtWidgets.QPushButton(self.frame)
+        self.add_btn.setMinimumSize(QtCore.QSize(115, 0))
+        self.add_btn.setMaximumSize(QtCore.QSize(115, 16777215))
         self.add_btn.setObjectName("add_btn")
         self.horizontalLayout_2.addWidget(self.add_btn)
         self.verticalLayout.addWidget(self.frame)
@@ -55,11 +110,20 @@ class Ui_Dialog(object):
         self.frame_3.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_3.setObjectName("frame_3")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.frame_3)
+        self.horizontalLayout.setContentsMargins(0, -1, 0, -1)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.lineEdit = QtWidgets.QLineEdit(self.frame_3)
-        self.lineEdit.setObjectName("lineEdit")
-        self.horizontalLayout.addWidget(self.lineEdit)
+        spacerItem = QtWidgets.QSpacerItem(632, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem)
+        self.delete_line = QtWidgets.QLineEdit(self.frame_3)
+        self.delete_line.setMinimumSize(QtCore.QSize(147, 24))
+        self.delete_line.setMaximumSize(QtCore.QSize(155, 16777215))
+        self.delete_line.setInputMask("")
+        self.delete_line.setText("")
+        self.delete_line.setObjectName("delete_line")
+        self.horizontalLayout.addWidget(self.delete_line)
         self.del_btn = QtWidgets.QPushButton(self.frame_3)
+        self.del_btn.setMinimumSize(QtCore.QSize(115, 0))
+        self.del_btn.setMaximumSize(QtCore.QSize(115, 16777215))
         self.del_btn.setObjectName("del_btn")
         self.horizontalLayout.addWidget(self.del_btn)
         self.verticalLayout.addWidget(self.frame_3)
@@ -73,6 +137,12 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        self.name_line.setPlaceholderText(_translate("Dialog", "Наименование"))
+        self.square_line.setPlaceholderText(_translate("Dialog", "Площадь поры"))
+        self.square_std_line.setPlaceholderText(_translate("Dialog", "Откл. от площади"))
+        self.density_line.setPlaceholderText(_translate("Dialog", "Пористость"))
+        self.density_std_line.setPlaceholderText(_translate("Dialog", "Откл. от пористости"))
         self.add_btn.setText(_translate("Dialog", "Добавить"))
+        self.delete_line.setPlaceholderText(_translate("Dialog", "id"))
         self.del_btn.setText(_translate("Dialog", "Удалить"))
         self.ok_btn.setText(_translate("Dialog", "OK"))
