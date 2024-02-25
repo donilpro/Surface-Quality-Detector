@@ -8,8 +8,8 @@ from PyQt5.QtGui import QPixmap, QImage
 
 import cv2 as cv
 
-from design import Ui_MainWindow
-from database.dialog import Ui_Dialog
+from design.main_design import Ui_MainWindow
+from design.dialog_design import Ui_Dialog
 from database.select import select_all, delete, add, select_name
 from algorithms import preprocessing
 
@@ -81,7 +81,7 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.edit_btn.clicked.connect(self.edit)
         self.actionOpen.triggered.connect(self.open_image)
-        self.logo_label.setPixmap(QPixmap('logo.png'))
+        self.logo_label.setPixmap(QPixmap('design/logo.png'))
 
         self.contrast_slider.valueChanged['int'].connect(self.contrast_update)
         self.brightness_slider.valueChanged['int'].connect(self.brightness_update)

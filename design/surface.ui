@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -21,6 +24,10 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QMainWindow{background-color: #F2EFE5}
+
+QSlider{
+	cor: black;
+}
 
 QComboBox {
 	background: white;
@@ -52,6 +59,9 @@ font: 12pt &quot;Jura&quot;}
 
 
 </string>
+  </property>
+  <property name="animated">
+   <bool>true</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
