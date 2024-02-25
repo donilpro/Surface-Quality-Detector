@@ -92,6 +92,7 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
         self.sharpness_reset.clicked.connect(self.reset_sharpness)
 
         self.image = None
+        self.final_image = None
         self.pore_density = 0
         self.pore_is_correct = False
         self.pore_anomaly = 0
@@ -108,6 +109,14 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
         self.report_name = datetime.now().strftime('reports/report_%d-%m-%Y_%H-%M-%S.csv')
         self.report_created = False
         self.save_btn.clicked.connect(self.save_report)
+
+        self.snapshot_btn.clicked.connect(self.save_image)
+
+    def save_image(self) -> None:
+        if self.final_image is not None:
+            filename, _ = QFileDialog.getSaveFileName(self, 'Save File', '', '*.jpg')
+            print(filename)
+            cv.imwrite(filename, self.final_image)
 
     def save_report(self) -> None:
         """
@@ -187,7 +196,7 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
             return
         self.image = cv.imread(file_path)
         self.set_image(self.image, 'main')
-        self.set_image(self.image, 'final')
+        self.update_image()
         self.area_update(self.image)
 
     def contrast_update(self, value) -> None:
@@ -197,7 +206,8 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
         :return:
         """
         self.contrast_value = value / 20 + 1
-        self.update_image()
+        if self.image is not None:
+            self.update_image()
 
     def brightness_update(self, value) -> None:
         """
@@ -206,7 +216,8 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
         :return:
         """
         self.brightness_value = value
-        self.update_image()
+        if self.image is not None:
+            self.update_image()
 
     def sharpness_update(self, value) -> None:
         """
@@ -215,7 +226,8 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
         :return:
         """
         self.sharpness_value = value / 10
-        self.update_image()
+        if self.image is not None:
+            self.update_image()
 
     def area_update(self, image) -> None:
         """
@@ -232,6 +244,7 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
         self.density_info.setText(f'Пористость: {self.pore_density}')
         self.anomaly_label.setText(f'Количество пор, \nпревышающих норму: {self.pore_anomaly}')
         self.set_image(img, 'close')
+        self.final_image = img
         print(float(self.density_label.text()) - float(self.density_std_label.text()))
         if (float(self.density_label.text()) - float(self.density_std_label.text()) <= self.pore_density
                 <= float(self.density_label.text()) + float(self.density_std_label.text())):
