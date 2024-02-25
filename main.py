@@ -113,6 +113,10 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
         self.snapshot_btn.clicked.connect(self.save_image)
 
     def save_image(self) -> None:
+        """
+        Сохранение итогового изображения
+        :return:
+        """
         if self.final_image is not None:
             filename, _ = QFileDialog.getSaveFileName(self, 'Save File', '', '*.jpg')
             print(filename)
