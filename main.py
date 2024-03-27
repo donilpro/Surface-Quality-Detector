@@ -81,7 +81,7 @@ class Window(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.edit_btn.clicked.connect(self.edit)
         self.actionOpen.triggered.connect(self.open_image)
-        self.logo_label.setPixmap(QPixmap('design/logo.png'))
+        self.logo_label.setPixmap(QPixmap('source files/logo.png'))
 
         self.contrast_slider.valueChanged['int'].connect(self.contrast_update)
         self.brightness_slider.valueChanged['int'].connect(self.brightness_update)
